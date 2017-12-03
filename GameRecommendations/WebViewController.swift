@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import Alamofire
 
-extension UIViewController
+/*extension UIViewController
 {
     func performSegueToReturnBack()
     {
@@ -24,24 +24,35 @@ extension UIViewController
         }
     }
 }
+ */
 
 class WebViewController: UIViewController, WKUIDelegate
 {
     var gameName : String! = ""
 
     @IBOutlet weak var webView: WKWebView!
-
+    @IBOutlet weak var navTitle: UINavigationItem!
+    
     override func loadView()
     {
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
         view = webView
+        
+        startSearch()
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        //startSearch()
+    }
+    
+    func startSearch()
+    {
+        navTitle.title = gameName //set title before removing spaces
         
         let urlProper = gameName.replacingOccurrences(of: " ", with: "_")
         let url = "https://en.wikipedia.org/wiki/\(urlProper)"
@@ -49,7 +60,7 @@ class WebViewController: UIViewController, WKUIDelegate
         let myRequest = URLRequest(url: myURL)
         webView.load(myRequest)
         webView.allowsBackForwardNavigationGestures = true
-        UIApplication.shared.statusBarStyle = .default
+        
     }
     
     override func didReceiveMemoryWarning()
@@ -61,7 +72,7 @@ class WebViewController: UIViewController, WKUIDelegate
 
     @IBAction func returnToPreviousView(_ sender: Any)
     {
-        print("here")
+        //print("here")
         self.dismiss(animated: true, completion: nil)
         
     }

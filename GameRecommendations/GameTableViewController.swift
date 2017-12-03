@@ -74,7 +74,6 @@ class GameTableViewController: UITableViewController
         //let game = gamesByGenre[gamesByGenre.index(gamesByGenre.startIndex, offsetBy: indexPath.row)]
         
         let game = gamesByGenreSorted[indexPath.row]
-        
         cell.gameNameLabel.text = game.name
         cell.ratingLabel.text = "Rating: \(String(describing: game.rating))"
         

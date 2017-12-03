@@ -32,6 +32,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     //Used method from online: https://stackoverflow.com/questions/40575686/detect-internet-connection-and-display-uialertview-swift-3 << Link
     override func viewDidAppear(_ animated: Bool)
     {
+        searchButton.isUserInteractionEnabled = false
         UIApplication.shared.statusBarStyle = .lightContent
         if Reachability.isConnectedToNetwork() == true
         {
@@ -96,6 +97,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         
     }
+    
     func makeGenreArray()
     {
         for game in games
@@ -103,6 +105,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             genreSet.insert(game.genres[0])
             genreSet.insert(game.genres[1])
         }
+        
+        searchButton.isUserInteractionEnabled = true
     }
     
     
