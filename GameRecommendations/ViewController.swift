@@ -32,7 +32,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     //Used method from online: https://stackoverflow.com/questions/40575686/detect-internet-connection-and-display-uialertview-swift-3 << Link
     override func viewDidAppear(_ animated: Bool)
     {
-        searchButton.isUserInteractionEnabled = false
+        //searchButton.isUserInteractionEnabled = false
         UIApplication.shared.statusBarStyle = .lightContent
         if Reachability.isConnectedToNetwork() == true
         {
@@ -40,7 +40,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             
             getData()
             isFirstLaunch = false //already have data, dont need internet connection afterwards
-            self.view.isUserInteractionEnabled = true
+            //self.view.isUserInteractionEnabled = true
             
             activityIndicator.stopAnimating()
         }
@@ -55,7 +55,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 
                 present(controller, animated: true, completion: nil)
                 
-                self.view.isUserInteractionEnabled = false
+                //self.view.isUserInteractionEnabled = false
             }
         }
     }
@@ -94,8 +94,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             self.genrePicker.dataSource = self
     
         }
-        
-        
     }
     
     func makeGenreArray()
@@ -115,14 +113,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    @IBAction func searchButton(_ sender: Any)
-    {
-        for game in games
-        {
-            print("name: \(game.name), \t genre: \(game.genres[0])")// \t genre1: \(game!.genres)")
-        }
-    }
     
     @IBAction func returnToMainView(_ segue: UIStoryboardSegue)
     {
@@ -132,14 +122,26 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     //Manually searching for a game by genre
     @IBAction func displayGamesByGenre(_ sender: Any)
     {
-        activityIndicator.startAnimating()
-        
-        searchPressed = true
-        pickerView(genrePicker, didSelectRow: genrePicker.selectedRow(inComponent: 0), inComponent: 0)
-        //gameTableViewController.tableView.reloadData()
-        performSegue(withIdentifier: "GameRecommendSegue", sender: self)
-        
-        activityIndicator.stopAnimating()
+        if Reachability.isConnectedToNetwork() == true || genreSet.count > 0
+        {
+            activityIndicator.startAnimating()
+            
+            searchPressed = true
+            pickerView(genrePicker, didSelectRow: genrePicker.selectedRow(inComponent: 0), inComponent: 0)
+            //gameTableViewController.tableView.reloadData()
+            performSegue(withIdentifier: "GameRecommendSegue", sender: self)
+            
+            activityIndicator.stopAnimating()
+        }
+        else
+        {
+            let controller = UIAlertController(title: "No Internet Detected", message: "Please connect to the internet to search, or restart the app after connecting to the internet.", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                
+            controller.addAction(ok)
+                
+            present(controller, animated: true, completion: nil)
+        }
     }
     
     

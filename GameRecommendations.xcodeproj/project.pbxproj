@@ -12,6 +12,7 @@
 		6B195A2B1FC7C694005300AB /* GameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B195A2A1FC7C694005300AB /* GameTableViewCell.swift */; };
 		6B195A2E1FC7C9B1005300AB /* GameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B195A2C1FC7C9B1005300AB /* GameTableViewController.swift */; };
 		6B195A2F1FC7C9B1005300AB /* GameTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B195A2D1FC7C9B1005300AB /* GameTableViewController.xib */; };
+		6B680D9C1FD5C533003B0CF2 /* ios in Resources */ = {isa = PBXBuildFile; fileRef = 6B680D9B1FD5C533003B0CF2 /* ios */; };
 		6B7014331FD0770E00FA5AE9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7014321FD0770D00FA5AE9 /* WebViewController.swift */; };
 		6BA3A8541FC378AD001AD235 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3A8531FC378AD001AD235 /* AppDelegate.swift */; };
 		6BA3A8561FC378AD001AD235 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA3A8551FC378AD001AD235 /* ViewController.swift */; };
@@ -29,6 +30,7 @@
 		6B195A2A1FC7C694005300AB /* GameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
 		6B195A2C1FC7C9B1005300AB /* GameTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTableViewController.swift; sourceTree = "<group>"; };
 		6B195A2D1FC7C9B1005300AB /* GameTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameTableViewController.xib; sourceTree = "<group>"; };
+		6B680D9B1FD5C533003B0CF2 /* ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ios; path = ../../../Downloads/GRAppIcon/ios; sourceTree = "<group>"; };
 		6B7014321FD0770D00FA5AE9 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		6BA3A8501FC378AD001AD235 /* GameRecommendations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameRecommendations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BA3A8531FC378AD001AD235 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				6BA3A8551FC378AD001AD235 /* ViewController.swift */,
 				6BA3A8571FC378AD001AD235 /* Main.storyboard */,
 				6BA3A85A1FC378AD001AD235 /* Assets.xcassets */,
+				6B680D9B1FD5C533003B0CF2 /* ios */,
 				6BA3A85C1FC378AD001AD235 /* LaunchScreen.storyboard */,
 				6BA3A85F1FC378AD001AD235 /* Info.plist */,
 				6BD1351E1FC37B3000EC4DE2 /* Game.swift */,
@@ -180,6 +183,7 @@
 				6B195A2F1FC7C9B1005300AB /* GameTableViewController.xib in Resources */,
 				6BA3A85B1FC378AD001AD235 /* Assets.xcassets in Resources */,
 				6BA3A8591FC378AD001AD235 /* Main.storyboard in Resources */,
+				6B680D9C1FD5C533003B0CF2 /* ios in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

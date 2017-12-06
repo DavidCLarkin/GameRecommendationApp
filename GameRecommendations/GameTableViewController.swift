@@ -59,7 +59,6 @@ class GameTableViewController: UITableViewController
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        //loadSampleGames()
         if first //only set the array the first time so it can be sortable
         {
             gamesByGenreSorted = Array(self.gamesByGenre)
@@ -127,12 +126,24 @@ class GameTableViewController: UITableViewController
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        if webSearchClick //only do this if the user searches for a game by clicking the cell
+        if webSearchClick && Reachability.isConnectedToNetwork() == true //only do this if the user searches for a game by clicking the cell
         {
             let navc = segue.destination as! UINavigationController //allow a nav bar on top of web view
             let vc = navc.topViewController as! WebViewController
             vc.gameName = gameName
             webSearchClick = false
+        }
+        else if webSearchClick && Reachability.isConnectedToNetwork() == false
+        {
+            let controller = UIAlertController(title: "No Internet Connection", message: "An internet connection is required to search for a game. Please connect to the internet to search.", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            
+            controller.addAction(ok)
+            
+            present(controller, animated: true, completion: nil)
+            
+            //self.view.isUserInteractionEnabled = false
+            
         }
     }
     
@@ -141,7 +152,7 @@ class GameTableViewController: UITableViewController
         webSearchClick = true
         let selectedCell = tableView.cellForRow(at: indexPath) as! GameTableViewCell
         gameName = selectedCell.gameNameLabel.text!
-        print(gameName)
+        //print(gameName)
         performSegue(withIdentifier: "WebSearchSegue", sender: self)
     }
  
@@ -190,11 +201,6 @@ class GameTableViewController: UITableViewController
     }
     */
     
-    //Mark: Private Methods
-    private func loadSampleGames()
-    {
-        //games.append(Game(name: "Legend of Zelda", genres: ["Action", "Adventure"], rating: 91)!)
-    }
     
     
 }
