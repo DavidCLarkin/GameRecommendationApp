@@ -14,7 +14,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 {
     
     //var url = "https://api.myjson.com/bins/1411of" //old url
-    var url = "https://api.myjson.com/bins/1bhe67"
+    //var url = "https://api.myjson.com/bins/1bhe67"
+    var url = "https://api.myjson.com/bins/1bfpdb"
     var jsonData : JSON = ""
     var games: [Game] = []
     var gamesByGenre: Set<Game> = Set()
@@ -32,7 +33,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     //Used method from online: https://stackoverflow.com/questions/40575686/detect-internet-connection-and-display-uialertview-swift-3 << Link
     override func viewDidAppear(_ animated: Bool)
     {
-        //searchButton.isUserInteractionEnabled = false
+        searchButton.isUserInteractionEnabled = false
         UIApplication.shared.statusBarStyle = .lightContent
         if Reachability.isConnectedToNetwork() == true
         {
