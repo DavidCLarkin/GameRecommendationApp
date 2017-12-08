@@ -104,33 +104,18 @@ class GameTableViewController: UITableViewController
         {
             gamesByGenreSorted = gamesByGenreSorted.sorted{ $0.name > $1.name }
         }
-        firstAlphaSort = !firstAlphaSort
+        firstAlphaSort = !firstAlphaSort //sort opposite to what it is at the moment
         
         tableView.reloadData()
     }
-    
-    /*@IBAction func webSearch(_ sender: UIButton)
-    {
-        webSearchClick = true
-        //NOT SELECTING THE CORRECT ONE
-        let selectedIndexPath = IndexPath(row: sender.tag, section: 0)
-        print(selectedIndexPath)
-        
-        let selectedCell = tableView.cellForRow(at: selectedIndexPath) as! GameTableViewCell
-        
-        gameName = selectedCell.gameNameLabel.text!
-        print(gameName)
-        performSegue(withIdentifier: "WebSearchSegue", sender: self)
-    }
- */
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         if webSearchClick && Reachability.isConnectedToNetwork() == true //only do this if the user searches for a game by clicking the cell
         {
             let navc = segue.destination as! UINavigationController //allow a nav bar on top of web view
-            let vc = navc.topViewController as! WebViewController
-            vc.gameName = gameName
+            let nextView = navc.topViewController as! WebViewController
+            nextView.gameName = gameName
             webSearchClick = false
         }
         else if webSearchClick && Reachability.isConnectedToNetwork() == false
@@ -152,7 +137,6 @@ class GameTableViewController: UITableViewController
         webSearchClick = true
         let selectedCell = tableView.cellForRow(at: indexPath) as! GameTableViewCell
         gameName = selectedCell.gameNameLabel.text!
-        //print(gameName)
         performSegue(withIdentifier: "WebSearchSegue", sender: self)
     }
  

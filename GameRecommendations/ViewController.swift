@@ -14,7 +14,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 {
     
     //var url = "https://api.myjson.com/bins/1411of" //old url
-    var url = "https://api.myjson.com/bins/1bhe67"
+    //var url = "https://api.myjson.com/bins/1bhe67"
+    var url = "https://api.myjson.com/bins/1bfpdb"
     var jsonData : JSON = ""
     var games: [Game] = []
     var gamesByGenre: Set<Game> = Set()
@@ -23,16 +24,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     var isFirstLaunch = true
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    //@IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var searchButton: UIButton!
-    @IBOutlet weak var setButton: UIButton!
     @IBOutlet weak var genrePicker: UIPickerView!
     
     
     //Used method from online: https://stackoverflow.com/questions/40575686/detect-internet-connection-and-display-uialertview-swift-3 << Link
     override func viewDidAppear(_ animated: Bool)
     {
-        //searchButton.isUserInteractionEnabled = false
+        searchButton.isUserInteractionEnabled = false
         UIApplication.shared.statusBarStyle = .lightContent
         if Reachability.isConnectedToNetwork() == true
         {
@@ -70,28 +69,40 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func getData()
     {
-        Alamofire.request(url).responseJSON
+        Alamofire.request(url).validate().responseJSON
         { response in
-                
-            self.jsonData = JSON(response.result.value ?? 0)
-            let result = JSON(self.jsonData)["games"].array!
-                
-            for index in 0...result.count-1
+            
+            if response.value == nil //present error to the user
             {
-                var genres = result[index]["genre"].array!
-                    
-                let name = result[index]["name"].string!
-                let rating = result[index]["rating"].int!
-                let genre1 = genres[0].string!
-                let genre2 = genres[1].string!
-                    
-                self.games.append(Game(name: name, genres: [genre1, genre2], rating: rating)!)
-                    
-            }
+                let controller = UIAlertController(title: "Couldn't Fetch Data", message: "Please try again later.", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
                 
-            self.makeGenreArray()
-            self.genrePicker.delegate = self
-            self.genrePicker.dataSource = self
+                controller.addAction(ok)
+                
+                self.present(controller, animated: true, completion: nil)
+            }
+            else
+            {
+                self.jsonData = JSON(response.result.value ?? 0)
+                let result = JSON(self.jsonData)["games"].array!
+                
+                for index in 0...result.count-1
+                {
+                    var genres = result[index]["genre"].array!
+                    
+                    let name = result[index]["name"].string!
+                    let rating = result[index]["rating"].int!
+                    let genre1 = genres[0].string!
+                    let genre2 = genres[1].string!
+                    
+                    self.games.append(Game(name: name, genres: [genre1, genre2], rating: rating)!)
+                    
+                }
+                
+                self.makeGenreArray()
+                self.genrePicker.delegate = self
+                self.genrePicker.dataSource = self
+            }
     
         }
     }
@@ -156,22 +167,24 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return genreSet.count
     }
     
+    //Title for each row
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {
         return genreSet[genreSet.index(genreSet.startIndex, offsetBy: row)]
     }
     
+    //Selecting a genre from the picker
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        gamesByGenre.removeAll()
+        gamesByGenre.removeAll() //empty so you can fill upon next search
         if searchPressed
         {
-            let value = genreSet[genreSet.index(genreSet.startIndex, offsetBy: row)] as String
+            let value = genreSet[genreSet.index(genreSet.startIndex, offsetBy: row)] as String //genre searched for is genre at selected row
             for game in games
             {
                 for genre in game.genres
                 {
-                    if value == genre
+                    if value == genre //if selected genre is in a game's genre array, then insert into set
                     {
                         gamesByGenre.insert(game)
                         searchPressed = false
@@ -184,19 +197,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     //changing picker view text color
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString?
     {
-        let str = genreSet[genreSet.index(genreSet.startIndex, offsetBy: row)] as String
-        return NSAttributedString(string: str, attributes: [NSAttributedStringKey.foregroundColor:UIColor.red])
+        let rowStr = genreSet[genreSet.index(genreSet.startIndex, offsetBy: row)] as String
+        return NSAttributedString(string: rowStr, attributes: [NSAttributedStringKey.foregroundColor:UIColor.red])
     }
-    /*public func getGamesArray() -> Array<Game?>
-    {
-        return games
-    }
-    */
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        let vc = segue.destination as! GameTableViewController
-        vc.gamesByGenre = gamesByGenre
+        let nextView = segue.destination as! GameTableViewController
+        nextView.gamesByGenre = gamesByGenre
     }
     
 

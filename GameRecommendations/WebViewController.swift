@@ -10,22 +10,6 @@ import UIKit
 import WebKit
 import Alamofire
 
-/*extension UIViewController
-{
-    func performSegueToReturnBack()
-    {
-        if let nav = self.navigationController
-        {
-            nav.popViewController(animated: true)
-        }
-        else
-        {
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
-}
- */
-
 class WebViewController: UIViewController, WKUIDelegate
 {
     var gameName : String! = ""
@@ -72,9 +56,7 @@ class WebViewController: UIViewController, WKUIDelegate
 
     @IBAction func returnToPreviousView(_ sender: Any)
     {
-        //print("here")
         self.dismiss(animated: true, completion: nil)
-        
     }
     /*
     // MARK: - Navigation
